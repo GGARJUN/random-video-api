@@ -13,4 +13,16 @@ router.get("/random", async (req, res) => {
   }
 });
 
+// Add new video
+router.post("/add", async (req, res) => {
+    try {
+      const { title, url, thumbnail } = req.body;
+      const newVideo = new Video({ title, url, thumbnail });
+      await newVideo.save();
+      res.status(201).json({ message: "Video added successfully", video: newVideo });
+    } catch (error) {
+      res.status(500).json({ message: "Error adding video", error });
+    }
+  });
+
 module.exports = router;
